@@ -16,6 +16,11 @@ module Poke
         @response = POGOProtos::Networking::Envelopes::ResponseEnvelope.decode(@response)
         logger.debug "[+] Decoded RPC response \r\n#{@response.inspect}"
 
+        if @response.status_code.to_i == 3
+        	logger.debug "[+] Account banned"
+        	raise Errors::BannedAccount
+      	end
+
         store_ticket(client)
         store_endpoint(client)
 
@@ -32,6 +37,8 @@ module Poke
           break unless decoded_resp.to_s.include?('POGOProtos::')
           parse_rpc_fields(decoded_resp)
         end
+
+
 
         decoded_resp.merge!(status_code: @response.status_code,
                             api_url: @response.api_url, error: @response.error)

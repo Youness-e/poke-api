@@ -18,7 +18,7 @@ module Poke
           @username = username
           @password = password
           @provider = 'ptc'
-          @client   = HTTPClient.new(agent_name: 'PokeAPI/0.0.1')
+          @client   = HTTPClient.new(agent_name: 'niantic')
           @expiry   = 0
         end
 

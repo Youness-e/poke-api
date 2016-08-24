@@ -43,6 +43,12 @@ module Poke
         end
       end
 
+      class BannedAccount < StandardError
+      	def initialize
+      		super("Unable to login, account banned!")
+      	end
+      end
+
       class InvalidEndpoint < StandardError
         def initialize
           super("Unable to fetch endpoint, please try to login again.")
