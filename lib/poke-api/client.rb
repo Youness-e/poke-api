@@ -3,7 +3,9 @@ module Poke
     class Client
       include Logging
       attr_accessor :endpoint, :sig_loaded, :refresh_token,
-                    :lat, :lng, :alt, :http_client, :ticket
+                    :lat, :lng, :alt, :http_client, :ticket,
+                    :android_gps_info, :sensor_info, :device_info,
+                    :activity_status, :location_fix
       attr_reader   :sig_path, :auth
 
       def initialize
@@ -41,7 +43,7 @@ module Poke
         begin
           resp = req.request(@reqs, self)
         rescue StandardError => ex
-          raise Errors::UnknownProtoFault, ex
+          error(ex)
         ensure
           @reqs = []
           logger.info '[+] Cleaning up RPC requests'
@@ -97,6 +99,14 @@ module Poke
           logger.info "[+] Refreshing access token as it is no longer valid"
           login(@username, @password, @provider)
         end
+      end
+
+      def error(ex)
+        if Poke::API::Errors.constants.include?(ex.class.to_s.split('::').last.to_sym)
+          raise ex.class
+        end
+
+        raise Errors::UnknownProtoFault, ex
       end
 
       def method_missing(method, *args)

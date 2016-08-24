@@ -1,5 +1,14 @@
 Changelog
 ------------------
+0.2.1 (21-08-2016)
+------------------
+* **Revert** - Initial ticket is reverted back to ``get_hatched_eggs`` as Niantic may detect someone constantly accepting TOS whereas this is only possible once in game. Accepting TOS is out of bounds for the API client (however it is possible to add the request for TOS before logging in as per usual methods)
+
+0.2.0 (21-08-2016)
+------------------
+* **Fix** - Fixed an issue whereby ``to_h`` was called causing Ruby 2.0.0 to not work. 
+* **Change** - The initial ticket will always request to mark tutorial as complete (this supports new PTC accounts out of the box without accepting TOS)
+* **Feature** - You can now provide the following optional information in the client constructor: ``:android_gps_info``, ``:sensor_info``, ``:device_info``,``:activity_status`` and ``:location_fix``
 
 0.1.7 (10-08-2016)
 ------------------

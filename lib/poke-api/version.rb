@@ -1,5 +1,5 @@
 module Poke
   module API
-    VERSION = '0.1.7'.freeze
+    VERSION = '0.2.1'.freeze
   end
 end
